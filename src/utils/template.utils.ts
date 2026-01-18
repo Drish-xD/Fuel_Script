@@ -42,7 +42,7 @@ const getTransactionData = (csvRow: TCSVRecord): TTransaction => {
 	return TransactionSchema.parse({
 		amount: formatCurrency(csvRow.Amount),
 		atot: generateRandomNumber(6, { prefix: "0000" }),
-		date: format(new Date(csvRow.Date), "dd/MM/yyyy"),
+		date_time: new Date(`${csvRow.Date} ${csvRow.Time}`),
 		density: csvRow.Density.toString(),
 		gstin: csvRow.GSTIN,
 		id: generateRandomNumber(stationConfig.id.length, {
@@ -53,11 +53,10 @@ const getTransactionData = (csvRow: TCSVRecord): TTransaction => {
 		rate: formatCurrency(csvRow.Rate),
 		receipt_number: generateRandomNumber(6),
 		side_logo: getLocalAssetUrl("hdfc_logo.png"),
-		side_logo_text: `$${format(new Date(csvRow.Date), "MM/yyyy")}`,
 		station_address: csvRow.Station_Address,
 		station_logo: stationConfig.logo,
+		station_name: csvRow.Station_Name,
 		station_type: csvRow.Station_Type,
-		time: format(new Date(`${csvRow.Date} ${csvRow.Time}`), "hh:mm:ss"),
 		volume: (csvRow.Amount / csvRow.Rate).toFixed(1),
 		vtot: generateRandomNumber(6, { prefix: "0000" }),
 	});

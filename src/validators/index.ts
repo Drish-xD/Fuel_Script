@@ -32,6 +32,7 @@ export const CSVRecordSchema = z.object({
 	GSTIN: z.string().optional().default(""),
 	Rate: z.coerce.number().min(1).default(0),
 	Station_Address: z.string().min(1),
+	Station_Name: z.string().min(1),
 	Station_Type: z.enum(STATION_TYPES),
 	Time: z.iso.time().nonempty(),
 });
@@ -41,7 +42,7 @@ export type TCSVRecord = z.infer<typeof CSVRecordSchema>;
 export const TransactionSchema = z.object({
 	amount: z.string().nonempty(),
 	atot: z.string().nonempty(),
-	date: z.string().nonempty(),
+	date_time: z.date(),
 	density: z.string().nonempty(),
 	gstin: z.string().optional().default(""),
 	id: z.string().nonempty(),
@@ -50,11 +51,10 @@ export const TransactionSchema = z.object({
 	rate: z.string().nonempty(),
 	receipt_number: z.string().nonempty(),
 	side_logo: z.string().nonempty(),
-	side_logo_text: z.string().nonempty(),
 	station_address: z.string().nonempty(),
 	station_logo: z.string().nonempty(),
+	station_name: z.string().nonempty(),
 	station_type: z.enum(STATION_TYPES),
-	time: z.string().nonempty(),
 	volume: z.string().nonempty(),
 	vtot: z.string().nonempty(),
 });

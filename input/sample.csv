@@ -1,4 +1,4 @@
-Sno,Date,Time,Rate,Amount,Density,Station_Address,Station_Type,GSTIN
-1,2025-08-10,10:23:45,94.93,3600,749.5,"Dev Fuel Station, Sector 42, Gurugram",HP,06AMNPP8866E2ZF
-2,2025-08-10,10:23:45,94.93,3600,749.5,"Hindustan Fuels, Sector 48, Gurugram",IOC,06ADKPR5523Q1ZV
-2,2025-08-10,10:23:45,94.93,3600,749.5,"Hindustan Fuels, Sector 48, Gurugram",BPCL,06ADKPR5523Q1ZV
+Sno,Date,Time,Rate,Amount,Density,Station_Name,Station_Address,Station_Type,GSTIN
+1,2025-08-10,10:23:45,94.93,3600,749.5,"Dev Fuel","Station, Sector 42, Gurugram",HP,06AMNPP8866E2ZF
+2,2025-08-10,10:23:45,94.93,3600,749.5,"Hindustan Fuels","Sector 48, Gurugram",IOC,06ADKPR5523Q1ZV
+2,2025-08-10,10:23:45,94.93,3600,749.5,"Hindustan Fuels","Sector 48, Gurugram",BPCL,06ADKPR5523Q1ZV

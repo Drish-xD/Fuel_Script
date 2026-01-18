@@ -52,7 +52,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 
 export const ReceiptContainer: FC<PropsWithChildren> = ({ children }) => (
 	<section class="w-full min-h-screen flex items-center justify-center break-after-page">
-		<div class="relative w-[250px] rounded shadow-lg grayscale brightness-90 contrast-140 opacity-90 blur-[0.2px]">
+		<div class="relative w-[250px] rounded shadow-lg grayscale brightness-90 contrast-110 opacity-90 blur-[0.2px]">
 			{children}
 			<div class="absolute inset-0 pointer-events-none mix-blend-overlay opacity-50 bg-[url('https://transparenttextures.com/patterns/green-dust-and-scratches.png')]" />
 		</div>

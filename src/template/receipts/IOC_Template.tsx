@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import type { FC } from "hono/jsx";
 import type { TReceipt } from "@/validators";
 
@@ -68,12 +69,12 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 		},
 		{
 			label: "Date:",
-			value: record.date,
+			value: format(record.date_time, "dd/MM/yyyy"),
 		},
 		{
 			className: "mb-4",
 			label: "Time:",
-			value: record.time,
+			value: format(record.date_time, "hh:mm:ss"),
 		},
 		{
 			label: "CST No.   :",
@@ -101,7 +102,7 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 			{/* Station Logo */}
 			<img
 				alt="Fuel Station Logo"
-				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply"
+				class="mx-auto w-[80px] h-[80px] object-contain mb-2 mix-blend-multiply"
 				src={record.station_logo}
 			/>
 
@@ -110,8 +111,10 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 			<p class="text-center">Duplicate Receipt Copy</p>
 
 			{/* Station Address */}
-			<div class="text-center uppercase mb-4">{record.station_address}</div>
-
+			<div class="text-center uppercase">
+				<p>{record.station_name}</p>
+				<p>{record.station_address}</p>
+			</div>
 			{/* Receipt Items */}
 			{receiptItems.map(({ label, value, className, hidden }) => {
 				if (hidden) return null;
@@ -129,7 +132,7 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 
 			<p class="pb-10">
 				Printed On: <br />
-				{record.date} {record.time}
+				{format(record.date_time, "dd/MM/yyyy hh:mm")}
 			</p>
 		</div>
 	);

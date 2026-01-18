@@ -1,3 +1,4 @@
+import { format, subMonths } from "date-fns";
 import type { FC } from "hono/jsx";
 import type { TReceipt } from "@/validators";
 import SideStrip from "../Layout/SideStrip";
@@ -46,11 +47,11 @@ const HpReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 		},
 		{
 			label: "Date",
-			value: record.date,
+			value: format(record.date_time, "dd/MM/yyyy"),
 		},
 		{
 			label: "Time",
-			value: record.time,
+			value: format(record.date_time, "hh:mm:ss"),
 		},
 		{
 			label: "FP. ID",
@@ -99,7 +100,10 @@ const HpReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 			/>
 
 			{/* Station Address */}
-			<div class="text-center uppercase mb-4">{record.station_address}</div>
+			<div class="text-center uppercase">
+				<p>{record.station_name}</p>
+				<p>{record.station_address}</p>
+			</div>
 
 			{/* Receipt Items */}
 			{receiptItems.map(({ label, value, className, hidden }) => {
@@ -116,7 +120,7 @@ const HpReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 			{/* Side Logo Strip */}
 			<SideStrip
 				side_logo={record.side_logo}
-				side_logo_text={record.side_logo_text}
+				side_logo_text={`$${format(subMonths(record.date_time, 2), "MM/yyyy")}`}
 			/>
 
 			{/* Footer */}

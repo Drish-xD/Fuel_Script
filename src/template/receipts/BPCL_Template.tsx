@@ -1,7 +1,9 @@
+import { addMinutes, format, subMonths } from "date-fns";
 import type { FC } from "hono/jsx";
 import type { TReceipt } from "@/validators";
+import SideStrip from "../Layout/SideStrip";
 
-const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
+const BPCLReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 	const receiptItems: {
 		label: string;
 		value: string;
@@ -9,19 +11,19 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 		hidden?: boolean;
 	}[] = [
 		{
-			label: "Inv. No.:",
-			value: record.id,
+			label: "Date:",
+			value: format(record.date_time, "dd-MM-yyyy"),
 		},
 		{
-			label: "PCC ID:",
-			value: record.receipt_number,
+			label: "Time:",
+			value: format(record.date_time, "hh:mm:ss"),
 		},
 		{
-			label: "FIP No.    :",
+			label: "Bay No:",
 			value: record.pump_number,
 		},
 		{
-			label: "Nozzle No.    :",
+			label: "Nozzle No:",
 			value: record.nozzle_number,
 		},
 		{
@@ -29,63 +31,48 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 			value: customer.vehicle_type,
 		},
 		{
-			label: "Density:",
-			value: `${record.density}kg/Cu.mtr`,
+			label: "Payment Mode:",
+			value: "Cash",
 		},
 		{
-			label: "Preset Type:",
-			value: "Volume",
+			label: "Txn Id:",
+			value: record.id,
 		},
 		{
-			label: "Rate (Rs/L) :",
+			label: "Attendant:",
+			value: "",
+		},
+		{
+			label: "TxSt:",
+			value: format(record.date_time, "dd-MM-yyyy hh:mm:ss"),
+		},
+		{
+			label: "TxEnd:",
+			value: format(addMinutes(record.date_time, 2.5), "dd-MM-yyyy hh:mm:ss"),
+		},
+		{
+			label: "Rate/Ltr.:",
 			value: record.rate,
 		},
 		{
-			label: "Volume (L) :",
+			label: "Volume(Ltr.):",
 			value: record.volume,
 		},
 		{
-			label: "Amount (Rs) :",
+			label: "Amount(Rs.) :",
 			value: record.amount,
 		},
 		{
-			label: "Atot :",
-			value: record.atot,
-		},
-		{
-			className: "mb-4",
-			label: "Vtot :",
-			value: record.vtot,
+			label: "PresetType:",
+			value: "NON PRESET",
 		},
 		{
 			label: "Vehicle No:",
 			value: customer.vehicle_number,
 		},
 		{
-			className: "mb-4",
 			label: "Mobile No:",
 			value: customer.mobile_number,
-		},
-		{
-			label: "Date:",
-			value: record.date,
-		},
-		{
-			className: "mb-4",
-			label: "Time:",
-			value: record.time,
-		},
-		{
-			label: "CST No.   :",
-			value: record.gstin,
-		},
-		{
-			label: "LST No.   :",
-			value: "",
-		},
-		{
-			label: "VAT No.   :",
-			value: "",
 		},
 	];
 
@@ -93,46 +80,50 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 		<div
 			class={`font-vt323 text-[18px] font-normal leading-4 p-4 bg-cover bg-center bg-no-repeat bg-[url('${texture}')]`}
 		>
-			<div class="flex flex-row gap-2 mb-1">
-				<span class="min-w-[25%] whitespace-nowrap">Inv. No.:</span>
-				<span>{record.id}</span>
-			</div>
-
 			{/* Station Logo */}
 			<img
 				alt="Fuel Station Logo"
-				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply"
+				class="mx-auto w-[80px] h-[80px] object-contain mb-2 mix-blend-multiply"
 				src={record.station_logo}
 			/>
 
 			{/* Station Welcome Message */}
-			<p class="font-roboto text-center text-[18px] mb-1">Welcomes You</p>
-			<p class="text-center">Duplicate Receipt Copy</p>
+			<p class="text-center mb-1">Welcomes To BPCL</p>
 
 			{/* Station Address */}
-			<div class="text-center uppercase mb-4">{record.station_address}</div>
+			<div class="text-center uppercase">
+				<p>{record.station_name}</p>
+				<p>Tin. No.:- {record.gstin}</p>
+				<p>{record.station_address}</p>
+			</div>
 
 			{/* Receipt Items */}
 			{receiptItems.map(({ label, value, className, hidden }) => {
 				if (hidden) return null;
 
 				return (
-					<div class={`my-1 flex flex-row gap-1 ${className}`} key={label}>
-						<span class="min-w-[25%] whitespace-nowrap">{label}</span>
+					<div
+						class={`my-1 flex flex-row gap-1 items-center justify-between ${className}`}
+						key={label}
+					>
+						<span class="whitespace-nowrap">{label}</span>
 						<span>{value}</span>
 					</div>
 				);
 			})}
 
 			{/* Footer */}
-			<p class="text-center my-4">Thank You! Please Visit Again.</p>
+			<p class="text-center uppercase my-4">Thank You For Fueling</p>
 
-			<p class="pb-10">
-				Printed On: <br />
-				{record.date} {record.time}
-			</p>
+			<p class="text-center uppercase my-4">Mission LiFE</p>
+
+			{/* Strip */}
+			<SideStrip
+				side_logo={record.side_logo}
+				side_logo_text={`D ${format(subMonths(record.date_time, 3), "MM/yyyy")}`}
+			/>
 		</div>
 	);
 };
 
-export default IOCReceipt;
+export default BPCLReceipt;

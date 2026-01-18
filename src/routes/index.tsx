@@ -10,6 +10,8 @@ const app = createApp();
 
 app.get("/", (c) => c.json({ message: "Hello World" }));
 
+app.get("/health", (c) => c.json({ message: "OK" }));
+
 app.post("/v1/generate", async (c) => {
 	try {
 		const body = await c.req.parseBody<TBody>();

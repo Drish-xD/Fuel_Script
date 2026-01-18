@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { STATION_LOGOS } from "@/constants";
+import { STATION_CONFIG } from "@/constants";
 import {
 	type TBody,
 	type TCSVRecord,
@@ -37,12 +37,17 @@ const formatCurrency = (amount: number): string => {
 };
 
 const getTransactionData = (csvRow: TCSVRecord): TTransaction => {
+	const stationConfig = STATION_CONFIG[csvRow.Station_Type];
+
 	return TransactionSchema.parse({
 		amount: formatCurrency(csvRow.Amount),
+		atot: generateRandomNumber(6, { prefix: "0000" }),
 		date: format(new Date(csvRow.Date), "dd/MM/yyyy"),
 		density: csvRow.Density.toString(),
 		gstin: csvRow.GSTIN,
-		id: generateRandomNumber(10, { prefix: "000000" }),
+		id: generateRandomNumber(stationConfig.id.length, {
+			prefix: stationConfig.id.prefix,
+		}),
 		nozzle_number: generateRandomNumber(1, { max: 6, min: 1 }),
 		pump_number: generateRandomNumber(1, { max: 6, min: 1 }),
 		rate: formatCurrency(csvRow.Rate),
@@ -50,10 +55,11 @@ const getTransactionData = (csvRow: TCSVRecord): TTransaction => {
 		side_logo: getLocalAssetUrl("hdfc_logo.png"),
 		side_logo_text: `$${format(new Date(csvRow.Date), "MM/yyyy")}`,
 		station_address: csvRow.Station_Address,
-		station_logo: STATION_LOGOS[csvRow.Station_Type],
+		station_logo: stationConfig.logo,
 		station_type: csvRow.Station_Type,
 		time: format(new Date(`${csvRow.Date} ${csvRow.Time}`), "hh:mm:ss"),
 		volume: (csvRow.Amount / csvRow.Rate).toFixed(1),
+		vtot: generateRandomNumber(6, { prefix: "0000" }),
 	});
 };
 

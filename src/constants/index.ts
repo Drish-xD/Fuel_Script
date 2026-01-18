@@ -6,13 +6,29 @@ export const STATION_TYPES = {
 
 export type TStationType = (typeof STATION_TYPES)[keyof typeof STATION_TYPES];
 
-export const STATION_LOGOS = {
-	BPCL: "https://freeforonline.com/assets/images/bill/pump-logo-bharat-petroleum.webp",
-	HP: "https://freeforonline.com/assets/images/bill/pump-logo-hp.webp",
-	IOC: "https://freeforonline.com/assets/images/bill/pump-logo-indian-oil.webp",
+export const STATION_CONFIG = {
+	BPCL: {
+		id: {
+			length: 10,
+			prefix: undefined,
+		},
+		logo: "https://freeforonline.com/assets/images/bill/pump-logo-bharat-petroleum.webp",
+	},
+	HP: {
+		id: {
+			length: 10,
+			prefix: undefined,
+		},
+		logo: "https://freeforonline.com/assets/images/bill/pump-logo-hp.webp",
+	},
+	IOC: {
+		id: {
+			length: 16,
+			prefix: undefined,
+		},
+		logo: "https://freeforonline.com/assets/images/bill/pump-logo-indian-oil.webp",
+	},
 } as const;
-
-export type TStationLogo = (typeof STATION_LOGOS)[keyof typeof STATION_LOGOS];
 
 export const PDF_HEADERS = {
 	"Content-Disposition": 'inline; filename="receipts.pdf"',

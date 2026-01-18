@@ -89,7 +89,7 @@ const HpReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 
 	return (
 		<div
-			class={`px-2 py-4 bg-cover bg-center bg-no-repeat bg-[url('${texture}')]`}
+			class={`font-press text-[8px] font-light px-2 py-4 bg-cover bg-center bg-no-repeat bg-[url('${texture}')]`}
 		>
 			{/* Station Logo */}
 			<img

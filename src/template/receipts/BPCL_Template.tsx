@@ -1,7 +1,7 @@
 import type { FC } from "hono/jsx";
 import type { TReceipt } from "@/validators";
 
-const BPCLReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
+const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 	const receiptItems: {
 		label: string;
 		value: string;
@@ -9,91 +9,105 @@ const BPCLReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 		hidden?: boolean;
 	}[] = [
 		{
-			hidden: !record.gstin.length,
-			label: "GSTIN",
-			value: record.gstin,
-		},
-		{
-			label: "Bill No",
-			value: `${record.receipt_number}-ORGNL`,
-		},
-		{
-			label: "Trans. ID",
+			label: "Inv. No.:",
 			value: record.id,
 		},
 		{
-			label: "Attnd. ID",
-			value: "",
+			label: "PCC ID:",
+			value: record.receipt_number,
 		},
 		{
-			className: "mb-3",
-			label: "Receipt",
-			value: "Physical Receipt",
-		},
-		{
-			label: "Name",
-			value: customer.customer_name,
-		},
-		{
-			label: "Vehi. No",
-			value: customer.vehicle_number,
-		},
-		{
-			className: "mb-3",
-			label: "Mob. No",
-			value: customer.mobile_number,
-		},
-		{
-			label: "Date",
-			value: record.date,
-		},
-		{
-			label: "Time",
-			value: record.time,
-		},
-		{
-			label: "FP. ID",
+			label: "FIP No.    :",
 			value: record.pump_number,
 		},
 		{
-			label: "Nozl. No.",
+			label: "Nozzle No.    :",
 			value: record.nozzle_number,
 		},
 		{
-			label: "Fuel",
+			label: "Product:",
 			value: customer.vehicle_type,
 		},
 		{
-			label: "Density",
-			value: `${record.density}kg/m3`,
+			label: "Density:",
+			value: `${record.density}kg/Cu.mtr`,
 		},
 		{
-			className: "mb-3",
-			label: "Preset",
-			value: "NON PRESET",
+			label: "Preset Type:",
+			value: "Volume",
 		},
 		{
-			label: "Rate",
-			value: `Rs.${record.rate}`,
+			label: "Rate (Rs/L) :",
+			value: record.rate,
 		},
 		{
-			label: "Sale",
-			value: `Rs.${record.amount}`,
+			label: "Volume (L) :",
+			value: record.volume,
 		},
 		{
-			label: "Volume",
-			value: `${record.volume}L`,
+			label: "Amount (Rs) :",
+			value: record.amount,
+		},
+		{
+			label: "Atot :",
+			value: record.atot,
+		},
+		{
+			className: "mb-4",
+			label: "Vtot :",
+			value: record.vtot,
+		},
+		{
+			label: "Vehicle No:",
+			value: customer.vehicle_number,
+		},
+		{
+			className: "mb-4",
+			label: "Mobile No:",
+			value: customer.mobile_number,
+		},
+		{
+			label: "Date:",
+			value: record.date,
+		},
+		{
+			className: "mb-4",
+			label: "Time:",
+			value: record.time,
+		},
+		{
+			label: "CST No.   :",
+			value: record.gstin,
+		},
+		{
+			label: "LST No.   :",
+			value: "",
+		},
+		{
+			label: "VAT No.   :",
+			value: "",
 		},
 	];
 
 	return (
-		<div class={`p-4 bg-cover bg-center bg-no-repeat bg-[url('${texture}')]`}>
+		<div
+			class={`font-vt323 text-[18px] font-normal leading-4 p-4 bg-cover bg-center bg-no-repeat bg-[url('${texture}')]`}
+		>
+			<div class="flex flex-row gap-2 mb-1">
+				<span class="min-w-[25%] whitespace-nowrap">Inv. No.:</span>
+				<span>{record.id}</span>
+			</div>
+
 			{/* Station Logo */}
 			<img
 				alt="Fuel Station Logo"
-				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply contrast-200"
+				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply"
 				src={record.station_logo}
 			/>
+
+			{/* Station Welcome Message */}
+			<p class="font-roboto text-center text-[18px] mb-1">Welcomes You</p>
+			<p class="text-center">Duplicate Receipt Copy</p>
 
 			{/* Station Address */}
 			<div class="text-center uppercase mb-4">{record.station_address}</div>
@@ -104,19 +118,21 @@ const BPCLReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 
 				return (
 					<div class={`my-1 flex flex-row gap-1 ${className}`} key={label}>
-						<span class="w-1/4 whitespace-nowrap ">{label}</span>
-						<span>: {value}</span>
+						<span class="min-w-[25%] whitespace-nowrap">{label}</span>
+						<span>{value}</span>
 					</div>
 				);
 			})}
 
 			{/* Footer */}
-			<div class="text-center mt-4">
-				<p>THANK YOU</p>
-				<p>VISIT AGAIN</p>
-			</div>
+			<p class="text-center my-4">Thank You! Please Visit Again.</p>
+
+			<p class="pb-10">
+				Printed On: <br />
+				{record.date} {record.time}
+			</p>
 		</div>
 	);
 };
 
-export default BPCLReceipt;
+export default IOCReceipt;

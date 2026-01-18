@@ -40,6 +40,7 @@ export type TCSVRecord = z.infer<typeof CSVRecordSchema>;
 
 export const TransactionSchema = z.object({
 	amount: z.string().nonempty(),
+	atot: z.string().nonempty(),
 	date: z.string().nonempty(),
 	density: z.string().nonempty(),
 	gstin: z.string().optional().default(""),
@@ -55,6 +56,7 @@ export const TransactionSchema = z.object({
 	station_type: z.enum(STATION_TYPES),
 	time: z.string().nonempty(),
 	volume: z.string().nonempty(),
+	vtot: z.string().nonempty(),
 });
 
 export type TTransaction = z.infer<typeof TransactionSchema>;

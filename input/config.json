@@ -1,0 +1,25 @@
+{
+	"customer": {
+		"name": "Drish",
+		"mobile_number": "9876543210",
+		"vehicle_number": "JK14G8586",
+		"vehicle_type": "Petrol"
+	},
+	"fuel_stations": [
+		{
+			"name": "Dev Fuel Station",
+			"address": "Sector 42, Gurugram",
+			"logoSrc": "https://freeforonline.com/assets/images/bill/pump-logo-hp.webp"
+		},
+		{
+			"name": "Karan Petroleum",
+			"address": "Sector 25, Gurugram",
+			"logoSrc": "https://freeforonline.com/assets/images/bill/pump-logo-hp.webp"
+		},
+		{
+			"name": "Hindustan Fuels",
+			"address": "Sector 48, Gurugram",
+			"logoSrc": "https://freeforonline.com/assets/images/bill/pump-logo-hp.webp"
+		}
+	]
+}

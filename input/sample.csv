@@ -1,0 +1,3 @@
+Sno,Date,Time,Rate,Amount,Density,Station_Address,Station_Type
+1,2025-08-10,10:23:45,94.93,3600,749.5,"Dev Fuel Station, Sector 42, Gurugram",HP
+2,2025-08-10,10:23:45,94.93,3600,749.5,"Hindustan Fuels, Sector 48, Gurugram",IOC

@@ -47,9 +47,9 @@ export const TransactionSchema = z.object({
 	nozzle_number: z.string().nonempty(),
 	pump_number: z.string().nonempty(),
 	rate: z.string().nonempty(),
-	// Receipt information
 	receipt_number: z.string().nonempty(),
-	// Station information
+	side_logo: z.string().nonempty(),
+	side_logo_text: z.string().nonempty(),
 	station_address: z.string().nonempty(),
 	station_logo: z.string().nonempty(),
 	station_type: z.enum(STATION_TYPES),

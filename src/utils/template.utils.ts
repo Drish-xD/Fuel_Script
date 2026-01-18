@@ -9,6 +9,10 @@ import {
 } from "@/validators";
 import { parseCSV } from "./parser.utils";
 
+const getLocalAssetUrl = (path: string) => {
+	return `${Bun.env.BASE_URL ?? "http://localhost:3000"}/static/${path}`;
+};
+
 const generateRandomNumber = (
 	length: number,
 	options?: { prefix?: string; min?: number; max?: number },
@@ -43,6 +47,8 @@ const getTransactionData = (csvRow: TCSVRecord): TTransaction => {
 		pump_number: generateRandomNumber(1, { max: 6, min: 1 }),
 		rate: formatCurrency(csvRow.Rate),
 		receipt_number: generateRandomNumber(6),
+		side_logo: getLocalAssetUrl("hdfc_logo.png"),
+		side_logo_text: `$${format(new Date(csvRow.Date), "MM/yyyy")}`,
 		station_address: csvRow.Station_Address,
 		station_logo: STATION_LOGOS[csvRow.Station_Type],
 		station_type: csvRow.Station_Type,
@@ -59,6 +65,8 @@ export const generateReceiptData = async ({
 	return csvData.map((record) => ({
 		customer,
 		record: getTransactionData(record),
-		texture: `${Bun.env.BASE_URL ?? "http://localhost:3000"}/static/${Math.floor(Math.random() * 12) + 1}.jpg`,
+		texture: getLocalAssetUrl(
+			`textures/${Math.floor(Math.random() * 12) + 1}.jpg`,
+		),
 	}));
 };

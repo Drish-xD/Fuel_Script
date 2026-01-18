@@ -2,10 +2,13 @@ import { type Browser, chromium } from "playwright";
 
 let browser: Browser | null = null;
 
+const isDebug = Bun.env.DEBUG_IN_BROWSWE === "true";
+
 async function getBrowser(): Promise<Browser> {
 	if (!browser) {
 		browser = await chromium.launch({
 			args: ["--no-sandbox", "--disable-setuid-sandbox"],
+			headless: !isDebug,
 		});
 	}
 	return browser;
@@ -31,6 +34,8 @@ export async function generatePDF(html: string) {
 
 		return new Uint8Array(pdf);
 	} finally {
-		await page.close();
+		if (!isDebug) {
+			await page.close();
+		}
 	}
 }

@@ -91,7 +91,7 @@ const IOCReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 			{/* Station Logo */}
 			<img
 				alt="Fuel Station Logo"
-				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply contrast-200"
+				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply"
 				src={record.station_logo}
 			/>
 

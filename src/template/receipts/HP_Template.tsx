@@ -1,5 +1,6 @@
 import type { FC } from "hono/jsx";
 import type { TReceipt } from "@/validators";
+import SideStrip from "../Layout/SideStrip";
 
 const HpReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 	const receiptItems: {
@@ -87,11 +88,13 @@ const HpReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 	];
 
 	return (
-		<div class={`p-4 bg-cover bg-center bg-no-repeat bg-[url('${texture}')]`}>
+		<div
+			class={`px-2 py-4 bg-cover bg-center bg-no-repeat bg-[url('${texture}')]`}
+		>
 			{/* Station Logo */}
 			<img
 				alt="Fuel Station Logo"
-				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply contrast-200"
+				class="mx-auto w-[100px] h-[100px] object-contain mb-2 mix-blend-multiply"
 				src={record.station_logo}
 			/>
 
@@ -104,11 +107,17 @@ const HpReceipt: FC<TReceipt> = ({ customer, record, texture }) => {
 
 				return (
 					<div class={`my-1 flex flex-row gap-1 ${className}`} key={label}>
-						<span class="w-1/4 whitespace-nowrap ">{label}</span>
+						<span class="min-w-[25%] whitespace-nowrap">{label}</span>
 						<span>: {value}</span>
 					</div>
 				);
 			})}
+
+			{/* Side Logo Strip */}
+			<SideStrip
+				side_logo={record.side_logo}
+				side_logo_text={record.side_logo_text}
+			/>
 
 			{/* Footer */}
 			<div class="text-center mt-4">

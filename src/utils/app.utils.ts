@@ -56,7 +56,7 @@ export const middleware = (app: OpenAPIHono) => {
 				);
 			},
 			rewriteRequestPath: (path) =>
-				path.replace(/^\/static/, "/src/template/textures"),
+				path.replace(/^\/static/, "/src/template/assets"),
 			root: "./",
 		}),
 	);

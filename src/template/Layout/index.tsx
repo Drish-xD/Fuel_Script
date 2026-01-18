@@ -38,7 +38,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 
 				<Style>{STYLES}</Style>
 			</head>
-			<body class="bg-white w-full p-0 m-0 font-press text-[8px] font-light leading-tight text-gray-700">
+			<body class="bg-white w-full p-0 m-0 font-press text-[8px] font-light leading-tight text-gray-700 opacity-90">
 				{children}
 			</body>
 		</html>
@@ -46,10 +46,10 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const ReceiptContainer: FC<PropsWithChildren> = ({ children }) => (
-	<section class="w-full h-screen flex items-center justify-center break-after-page">
-		<div class="relative w-[300px] rounded shadow-lg grayscale brightness-90 contrast-140">
+	<section class="w-full min-h-screen flex items-center justify-center break-after-page">
+		<div class="relative w-[250px] rounded shadow-lg grayscale brightness-90 contrast-140">
 			{children}
-			<div class="absolute inset-0 pointer-events-none mix-blend-overlay opacity-40 bg-[url('https://transparenttextures.com/patterns/green-dust-and-scratches.png')]" />
+			<div class="absolute inset-0 pointer-events-none mix-blend-overlay opacity-50 bg-[url('https://transparenttextures.com/patterns/green-dust-and-scratches.png')]" />
 		</div>
 	</section>
 );

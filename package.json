@@ -5,6 +5,7 @@
 		"url": "https://drishxd.dev"
 	},
 	"dependencies": {
+		"@hono/zod-openapi": "^1.2.0",
 		"@scalar/hono-api-reference": "^0.9.34",
 		"csv-parse": "^6.1.0",
 		"date-fns": "^4.1.0",
@@ -23,10 +24,9 @@
 	"name": "fuel_receipts",
 	"private": true,
 	"scripts": {
-		"build": "bun build src/index.tsx --minify --compile --sourcemap --outfile server --external playwright-core --external electron",
+		"build": "bun build src/index.tsx --minify --compile --outfile server --external chromium-bidi --external electron",
 		"check": "biome check --fix",
-		"dev": "bun run --watch src/index.tsx",
-		"start": "bun run server.js"
+		"dev": "bun run --hot src/index.tsx"
 	},
 	"type": "module",
 	"version": "1.0.0"

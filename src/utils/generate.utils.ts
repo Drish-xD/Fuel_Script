@@ -24,10 +24,8 @@ export async function generatePDF(html: string) {
 		});
 
 		const pdf = await page.pdf({
-			printBackground: true,
 			preferCSSPageSize: true,
-			width: "320px",
-			height: "480px",
+			printBackground: true,
 		});
 
 		return new Uint8Array(pdf);
@@ -35,5 +33,3 @@ export async function generatePDF(html: string) {
 		await page.close();
 	}
 }
-
-const generate = async (config: TInputConfig, csvData: CSVRow[]) => {};

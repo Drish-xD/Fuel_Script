@@ -1,23 +1,29 @@
-import { type FC, Fragment } from "hono/jsx";
-import type { ReceiptTemplate } from "../validators/template";
-import HPReceipt from "./HP_Template";
-import IOCReceipt from "./IOC_Template";
-import Layout from "./Layout";
+import type { FC } from "hono/jsx";
+import type { TStationType } from "@/constants";
+import type { TReceipt } from "@/validators";
+import { Layout, ReceiptContainer } from "./Layout";
+import BPCLReceipt from "./receipts/BPCL_Template";
+import HpReceipt from "./receipts/HP_Template";
+import IOCReceipt from "./receipts/IOC_Template";
 
-const TEMPLATES = [HPReceipt, IOCReceipt] as const;
-
-const ReceiptList: FC<{ receipts: ReceiptTemplate[] }> = ({ receipts }) => {
-	const ReceiptComponent = TEMPLATES[receipts[0].fuelStation.type];
-
-	return (
-		<Fragment>
-			{receipts.map((receipt) => (
-				<Layout key={receipt.transaction.number}>
-					<ReceiptComponent {...receipt} />
-				</Layout>
-			))}
-		</Fragment>
-	);
+const TEMPLATES: Record<TStationType, FC<TReceipt>> = {
+	BPCL: BPCLReceipt,
+	HP: HpReceipt,
+	IOC: IOCReceipt,
 };
+
+const ReceiptList: FC<{ receipts: TReceipt[] }> = ({ receipts }) => (
+	<Layout>
+		{receipts.map(({ customer, record }) => {
+			const ReceiptComponent = TEMPLATES[record.station_type];
+
+			return (
+				<ReceiptContainer key={record.id}>
+					<ReceiptComponent customer={customer} record={record} />
+				</ReceiptContainer>
+			);
+		})}
+	</Layout>
+);
 
 export default ReceiptList;

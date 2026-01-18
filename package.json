@@ -26,9 +26,10 @@
 	"name": "fuel_receipts",
 	"private": true,
 	"scripts": {
-		"build": "bun run build",
+    "build": "bun build src/index.tsx --outdir ./dist --target bun --external electron --external chromium-bidi",
 		"check": "biome check --fix",
-		"dev": "bun run --watch src/index.tsx"
+		"dev": "bun run --watch src/index.tsx",
+		"start": "bun run dist/index.js"
 	},
 	"type": "module",
 	"version": "1.0.0"

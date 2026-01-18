@@ -66,12 +66,17 @@ export const generateReceiptData = async ({
 	file,
 	...customer
 }: TBody): Promise<TReceipt[]> => {
+	console.log(`[Receipt Generator] Generating receipt data for customer: ${customer.customer_name || 'Unknown'}`);
 	const csvData = await parseCSV(file);
-	return csvData.map((record) => ({
+	
+	const receipts = csvData.map((record) => ({
 		customer,
 		record: getTransactionData(record),
 		texture: getLocalAssetUrl(
 			`textures/${Math.floor(Math.random() * 12) + 1}.jpg`,
 		),
 	}));
+	
+	console.log(`[Receipt Generator] Successfully generated ${receipts.length} receipt data entry/entries`);
+	return receipts;
 };

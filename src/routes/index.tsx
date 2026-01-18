@@ -11,16 +11,25 @@ const app = createApp();
 app.get("/", (c) => c.json({ message: "Hello World" }));
 
 app.post("/v1/generate", async (c) => {
-	const body = await c.req.parseBody<TBody>();
-	const templateData = await generateReceiptData(body);
+	try {
+		const body = await c.req.parseBody<TBody>();
+		
+		console.log(`[PDF Generation] Starting receipt generation for ${body.file.name || 'CSV file'}`);
+		
+		const templateData = await generateReceiptData(body);
+		console.log(`[PDF Generation] Generated ${templateData.length} receipt(s)`);
 
-	console.log("templateData : :: : : ", templateData);
+		const html = await renderToString(<ReceiptList receipts={templateData} />);
+		console.log(`[PDF Generation] HTML template rendered successfully`);
 
-	const html = await renderToString(<ReceiptList receipts={templateData} />);
+		const pdfBuffer = await generatePDF(html);
+		console.log(`[PDF Generation] PDF generated successfully (${pdfBuffer.length} bytes)`);
 
-	const pdfBuffer = await generatePDF(html);
-
-	return c.body(pdfBuffer, 200, PDF_HEADERS);
+		return c.body(pdfBuffer, 200, PDF_HEADERS);
+	} catch (error) {
+		console.error(`[PDF Generation] Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+		throw error;
+	}
 });
 
 export default app;

@@ -47,13 +47,10 @@ export const middleware = (app: OpenAPIHono) => {
 		"/static/*",
 		serveStatic({
 			onFound: (path, c) => {
-				console.log(`Static file found: ${path}`);
 				c.header("Cache-Control", "public, max-age=31536000");
 			},
 			onNotFound: (path, c) => {
-				console.log(
-					`Static file not found: ${path} (requested: ${c.req.path})`,
-				);
+				console.warn(`[Static Files] File not found: ${path} (requested: ${c.req.path})`);
 			},
 			rewriteRequestPath: (path) =>
 				path.replace(/^\/static/, "/src/template/assets"),

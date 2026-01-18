@@ -24,6 +24,7 @@ export async function generatePDF(html: string) {
 		});
 
 		const pdf = await page.pdf({
+			format: "A4",
 			preferCSSPageSize: true,
 			printBackground: true,
 		});

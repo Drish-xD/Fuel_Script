@@ -14,12 +14,16 @@ const TEMPLATES: Record<TStationType, FC<TReceipt>> = {
 
 const ReceiptList: FC<{ receipts: TReceipt[] }> = ({ receipts }) => (
 	<Layout>
-		{receipts.map(({ customer, record }) => {
+		{receipts.map(({ customer, record, texture }) => {
 			const ReceiptComponent = TEMPLATES[record.station_type];
 
 			return (
 				<ReceiptContainer key={record.id}>
-					<ReceiptComponent customer={customer} record={record} />
+					<ReceiptComponent
+						customer={customer}
+						record={record}
+						texture={texture}
+					/>
 				</ReceiptContainer>
 			);
 		})}

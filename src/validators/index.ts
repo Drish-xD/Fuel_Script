@@ -65,6 +65,7 @@ export type TTransaction = z.infer<typeof TransactionSchema>;
 export const ReceiptSchema = z.object({
 	customer: CustomerInfoSchema,
 	record: TransactionSchema,
+	texture: z.string().nonempty(),
 });
 
 export type TReceipt = z.infer<typeof ReceiptSchema>;

@@ -9,11 +9,15 @@ import {
 } from "@/validators";
 import { parseCSV } from "./parser.utils";
 
-const generateRandomNumber = (length: number, prefix?: string): string => {
-	const min = 10 ** (length - 1);
-	const max = 10 ** length - 1;
+const generateRandomNumber = (
+	length: number,
+	options?: { prefix?: string; min?: number; max?: number },
+): string => {
+	const min = options?.min ?? 10 ** (length - 1);
+	const max = options?.max ?? 10 ** length - 1;
 	const number = Math.floor(Math.random() * (max - min + 1)) + min;
-	return prefix ? `${prefix}${number}` : number.toString();
+
+	return options?.prefix ? `${options.prefix}${number}` : number.toString();
 };
 
 const formatCurrency = (amount: number): string => {
@@ -34,9 +38,9 @@ const getTransactionData = (csvRow: TCSVRecord): TTransaction => {
 		date: format(new Date(csvRow.Date), "dd/MM/yyyy"),
 		density: csvRow.Density.toString(),
 		gstin: csvRow.GSTIN,
-		id: generateRandomNumber(10, "000000"),
-		nozzle_number: generateRandomNumber(1, "0"),
-		pump_number: generateRandomNumber(1, "0"),
+		id: generateRandomNumber(10, { prefix: "000000" }),
+		nozzle_number: generateRandomNumber(1, { max: 6, min: 1 }),
+		pump_number: generateRandomNumber(1, { max: 6, min: 1 }),
 		rate: formatCurrency(csvRow.Rate),
 		receipt_number: generateRandomNumber(6),
 		station_address: csvRow.Station_Address,
@@ -52,10 +56,9 @@ export const generateReceiptData = async ({
 	...customer
 }: TBody): Promise<TReceipt[]> => {
 	const csvData = await parseCSV(file);
-	console.log("csvData : :: : : ", csvData);
-
 	return csvData.map((record) => ({
 		customer,
 		record: getTransactionData(record),
+		texture: `${Bun.env.BASE_URL ?? "http://localhost:3000"}/static/${Math.floor(Math.random() * 12) + 1}.jpg`,
 	}));
 };

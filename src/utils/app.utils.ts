@@ -1,5 +1,6 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
+import { serveStatic } from "hono/bun";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
@@ -41,4 +42,22 @@ export const middleware = (app: OpenAPIHono) => {
 	app.use(cors());
 	app.use(logger());
 	app.use(prettyJSON());
+	// Serve static files from texture directory
+	app.use(
+		"/static/*",
+		serveStatic({
+			onFound: (path, c) => {
+				console.log(`Static file found: ${path}`);
+				c.header("Cache-Control", "public, max-age=31536000");
+			},
+			onNotFound: (path, c) => {
+				console.log(
+					`Static file not found: ${path} (requested: ${c.req.path})`,
+				);
+			},
+			rewriteRequestPath: (path) =>
+				path.replace(/^\/static/, "/src/template/textures"),
+			root: "./",
+		}),
+	);
 };
